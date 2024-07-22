@@ -43,8 +43,8 @@ ALTER PROCEDURE [dbo].[IndexOptimize]
 @DatabasesInParallel nvarchar(max) = 'N',
 @ExecuteAsUser nvarchar(max) = NULL,
 @LogToTable nvarchar(max) = 'N',
-@Execute nvarchar(max) = 'Y'
-
+@Execute nvarchar(max) = 'Y',
+@NoRecompute bit = 0
 AS
 
 BEGIN
@@ -2245,7 +2245,7 @@ BEGIN
             SELECT 'RESAMPLE'
           END
 
-          IF @CurrentNoRecompute = 1
+          IF @CurrentNoRecompute = 1 OR @NoRecompute = 1
           BEGIN
             INSERT INTO @CurrentUpdateStatisticsWithClauseArguments (Argument)
             SELECT 'NORECOMPUTE'
